@@ -24,7 +24,7 @@ class IPField extends Component {
         e.preventDefault();
         const {ip} = this.state;
         console.log("From Home: " + ip);
-
+        sessionStorage.setItem("ip", ip);
         return this.setState(
             {
                 redirect: true

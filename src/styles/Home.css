@@ -15,7 +15,7 @@ body{
 
 .gradient-background{
     background: #252330;
-    background: linear-gradient(0deg, rgba(30,33,46,1) 0%, rgba(41,46,69,1) 100%);
+    /* background: linear-gradient(0deg, rgba(30,33,46,1) 0%, rgba(41,46,69,1) 100%); */
 }
 
 .logo{
@@ -87,8 +87,20 @@ body{
     background-color: #f2cf0a;
 }
 
+ /* container for the rest of the element except footer */
+.page-container{
+    position: relative;
+    min-height: 100%;
+    min-height: 100vh;
+}
+
+.content-wrap{
+    padding-bottom: 2.5rem;
+}
+
 /* footer section */
 .footer{
+    align-self: baseline;
     padding-top: 2%;
     margin-bottom: 1%;
     font-family: 'Jost', sans-serif;

@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+
+.header{
+    padding-top: 1%;
+    padding-right: 3%;
+    padding-left: 3%;
+    width: 100%;
+}
+
+.header-ip{
+    color: gold;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: x-large;
+    text-align: center;
+}
+
+.app-title{
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: x-large;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.app-name{
+    /* font-family: 'Roboto Condensed', sans-serif; */
+    font-weight: 500;
+    color: lightsteelblue;
+    font-size: x-large;
+}
+
+.app-button{
+    background: none;
+    border: none;
+    width: 100%;
+}
+
+.calculator-body{
+    background-color: whitesmoke;
+}
