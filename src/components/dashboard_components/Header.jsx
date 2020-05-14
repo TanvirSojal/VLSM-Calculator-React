@@ -40,6 +40,7 @@ class Header extends Component{
                         <p className="header-ip">Available IP Space: <span style={{color: 'whitesmoke'}}>{totalAvailable}</span></p>
                     </div>
                 </div>
+                <div className="row divider"></div>
             </div>
         )
     }

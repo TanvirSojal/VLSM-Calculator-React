@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../styles/Dashboard.css';
 import Header from '../components/dashboard_components/Header';
-import Calculator from '../components/dashboard_components/Calculator';
+import HostGroupInput from '../components/dashboard_components/HostGroupInput';
 
 class Dashboard extends Component {
 
@@ -16,7 +16,7 @@ class Dashboard extends Component {
             return (
                 <div>
                     <Header ip={ip}/>
-                    <Calculator />
+                    <HostGroupInput />
                 </div>
             )
         }

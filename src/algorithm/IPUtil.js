@@ -2,6 +2,7 @@ import IP from '../model/IP'
 import BigInt from '../../node_modules/big-integer/BigInteger'
 class IPUtil{
     static IPV4Bits = 32;
+    static maxValue = BigInt(4294967296);
 
     static getOctetBigInt(n){
         return BigInt(n)
@@ -40,6 +41,12 @@ class IPUtil{
         return new IP(networkId, ip, cidr); // IP Object{addressValue, addressNotation, cidr}
     }
 
+    static nextIP(ip){
+        ip.addressValue = ip.addressValue + 1;
+        if (ip.addressValue > this.maxValue)
+            return false;
+        ip.addressNotation = this.getIPNotation(ip.addressValue);
+    }
     static getAvailableSpace(ip){
         const IPObject = this.getIPObject(ip);
         const addressValue = BigInt(IPObject.addressValue);
@@ -56,14 +63,8 @@ class IPUtil{
             if (addressValue.and(bit).greater(BigInt.zero)){
                 host = host.or(bit);
             }
-            // if (this.isSet(addressValue, i)){
-            //     host = host.or(bit);
-            // }
-            // console.log(host);
         }
-        // const x = BigInt.one.shiftLeft(wildcard+1);
-        // console.log(x);
-        return BigInt.one.shiftLeft(wildcard+1) - host;
+        return BigInt.one.shiftLeft(wildcard) - host;
     }
 
     static getIPNotation(n, cidr=-1){

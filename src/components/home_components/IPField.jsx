@@ -13,11 +13,7 @@ class IPField extends Component {
     }
 
     handleInputChange(e){
-        this.setState(
-            {
-                ip: e.target.value
-            }
-        )     
+        this.setState({ ip: e.target.value })     
     }
 
     handleInput(e){
