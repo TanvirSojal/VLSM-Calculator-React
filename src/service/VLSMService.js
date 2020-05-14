@@ -1,5 +1,4 @@
-import axios from 'axios'
-import proxy from '../setupProxy';
+import axios from 'axios';
 
 class VLSMService{
     constructor() {
