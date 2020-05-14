@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class HostGroupTable extends Component {
     render(){
         const rows = this.props.rows;
-        console.log("From table", rows);
+        // console.log("From table", rows);
     
         return (
             <div>
