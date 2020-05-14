@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-
+import HostGroupTable from './HostGroupTable'
+import VLSMService from '../../service/VLSMService';
+import IPUtil from '../../algorithm/IPUtil';
+import IPAllocationRequest from '../../model/IPAllocationRequest';
 class HostGroupInput extends Component {
 
     constructor(props){
@@ -7,13 +10,15 @@ class HostGroupInput extends Component {
         this.state = {
             groupName: "",
             groupSize: "",
-            hostGroups: []
+            hostGroups: [],
+            queryResult: false
         }
         this.handleClearForm = this.handleClearForm.bind(this);
         this.handleGroupNameChange = this.handleGroupNameChange.bind(this);
         this.handleGroupSizeChange = this.handleGroupSizeChange.bind(this);
         this.handleSubmitForm = this.handleSubmitForm.bind(this);
         this.handleResetAll = this.handleResetAll.bind(this);
+        this.handleAllocationRequest = this.handleAllocationRequest.bind(this);
     }
 
     handleClearForm(e){
@@ -24,29 +29,51 @@ class HostGroupInput extends Component {
         this.setState({ groupName: e.target.value })
     }
     handleGroupSizeChange(e){
-        // if (this.state.groupSize === "")
-        //     this.setState({ groupSize: Number(e.target.value) })
-        // else
         this.setState({ groupSize: e.target.value })
     }
 
     handleResetAll(e){
-        this.setState({hostGroups: []});
+        this.setState({hostGroups: [], queryResult: false});
     }
 
     handleSubmitForm(e){
         e.preventDefault();
         console.log("submitted");
-        const groupName = this.state.groupName;
-        const groupSize = this.state.groupSize;
-        this.state.hostGroups.push({groupName, groupSize});
+        const id = this.state.hostGroups.length + 1;
+        const name = this.state.groupName;
+        const size = Number(this.state.groupSize);
+        this.state.hostGroups.push({id, name, size});
+        this.setState({queryResult: false})
         this.handleClearForm();
     }
+
+
+    handleAllocationRequest(e){
+        if (this.state.hostGroups.length === 0)
+            return;
+
+        const vlsmService = new VLSMService();
+        const sourceIP = IPUtil.getIPObject(sessionStorage.getItem("ip"));
+        const ipAllocationRequest = new IPAllocationRequest(sourceIP, this.state.hostGroups);
+        const promise = vlsmService.getHostGroupAllocation(ipAllocationRequest);
+        promise.then(data => { // this part is asynchronous
+            console.log("Found it!", data);
+            this.setState({queryResult : data});
+            
+        });
+    }
+
     render(){
         const rows = this.state.hostGroups;
-        let id = 1;
-        let allocateButton = undefined;
-        let hostGroupTable = undefined;
+        let allocateButton = false;
+        let hostGroupTable = false;
+        let result = false;
+
+        if (this.state.queryResult){
+            result = (
+                <HostGroupTable rows={this.state.queryResult}/>
+            )
+        }
 
         const inputField = (
             <div className="container-fluid host-form pt-5 pb-5">
@@ -102,7 +129,7 @@ class HostGroupInput extends Component {
             allocateButton = (
                 <div className="row pt-5">
                     <div className="col-sm-4 offset-sm-4">
-                        <button>Calculate Subnet Allocation</button>
+                        <button className="allocate-button" onClick={this.handleAllocationRequest}>Calculate Subnet Allocation</button>
                     </div>
                 </div>
             )
@@ -120,10 +147,10 @@ class HostGroupInput extends Component {
                             </thead>
                             <tbody className="host-table-body">
                                 {rows.map(row => {
-                                    return <tr key={id}>
-                                            <th scope="row">{id++}</th>
-                                            <td>{row.groupName}</td>
-                                            <td>{row.groupSize}</td>
+                                    return <tr key={row.id}>
+                                            <th scope="row">{row.id}</th>
+                                            <td>{row.name}</td>
+                                            <td>{row.size}</td>
                                         </tr>
                                 })}
                             </tbody>
@@ -144,6 +171,9 @@ class HostGroupInput extends Component {
                 </div>
                 <div>
                     {allocateButton}
+                </div>
+                <div>
+                    {result}
                 </div>
             </div>
         )

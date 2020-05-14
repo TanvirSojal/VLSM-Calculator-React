@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IPUtil from '../../algorithm/IPUtil'
+import IPUtil from '../../algorithm/IPUtil';
 import { Redirect } from 'react-router-dom';
 
 class Header extends Component{

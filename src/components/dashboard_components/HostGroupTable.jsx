@@ -4,33 +4,35 @@ import React, { Component } from 'react';
 class HostGroupTable extends Component {
     render(){
         const rows = this.props.rows;
-        let id = 1;
+        console.log("From table", rows);
+    
         return (
             <div>
                 <div className="container-fluid">
                     <div className="row pt-5">
-                        <div className="col-sm-6 offset-sm-3">
-                            <table className="table table-dark host-table">
+                        <div className="col-sm-8 offset-sm-2">
+                            <table className="table table-dark result-table">
                                 <thead>
-                                    <tr className="host-table-head">
+                                    <tr className="result-table-head">
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Size</th>
+                                    <th scope="col">Group Size</th>
+                                    <th scope="col">Network Address</th>
+                                    <th scope="col">Gateway Address</th>
+                                    <th scope="col">Broadcast Address</th>
                                     </tr>
                                 </thead>
-                                <tbody className="host-table-body">
+                                <tbody className="result-table-body">
                                     {rows.map(row => {
-                                        return <tr key={id}>
-                                                <th scope="row">{id++}</th>
-                                                <td>{row.groupName}</td>
+                                        return <tr key={row.id}>
+                                                <th scope="row">{row.id}</th>
+                                                <td>{row.name}</td>
                                                 <td>{row.groupSize}</td>
+                                                <td>{row.networkAddress.addressNotation}</td>
+                                                <td>{row.gatewayAddress.addressNotation}</td>
+                                                <td>{row.broadcastAddress.addressNotation}</td>
                                             </tr>
                                     })}
-                                    {/* <tr>
-                                        <th scope="row">1</th>
-                                        <td>My Office</td>
-                                        <td>4</td>
-                                    </tr> */}
                                 </tbody>
                             </table>
                         </div>
