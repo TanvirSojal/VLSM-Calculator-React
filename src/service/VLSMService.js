@@ -2,11 +2,11 @@ import axios from 'axios';
 
 class VLSMService{
     constructor() {
-        this.allocationURL = "https://vlsm-calculator.herokuapp.com/api/v1/vlsm-calculator";
+        this.allocationURL = "https://vlsm-calculator.herokuapp.com/api/v1/vlsm-calculator/allocation";
         // this.allocationURL = "http://localhost:8080/api/v1/vlsm-calculator/allocation";
     }
     async getHostGroupAllocation(request){
-        // console.log("Query: ", request);
+        console.log("Query: ", request);
         // const response = await fetch(this.allocationURL, request);
         // const data = await response.json();
         // return data;
