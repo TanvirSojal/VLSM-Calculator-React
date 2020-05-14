@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "big-integer": "^1.6.48",
     "bootstrap": "^4.4.1",
+    "http-proxy-middleware": "^1.0.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
