@@ -5,17 +5,7 @@ class VLSMService{
         this.allocationURL = "http://vlsm-calculator.herokuapp.com/api/v1/vlsm-calculator/allocation";
     }
     getHostGroupAllocation(request){
-        console.log("Query: ", request);
-        const promise = this.getResponse(request);
-        return promise;
-        // const data =  promise.then(data => {
-        //     console.log("DATA: ", data);
-        //     return data;
-        // });
-        // console.log(typeof data);
-    }
-
-    getResponse(request){
+        // console.log("Query: ", request);
         return axios.post(this.allocationURL, request)
             .then(response => {
                 console.log("Response: ", response);
