@@ -11,7 +11,7 @@ class Dashboard extends Component {
     }
     render(){
         const ip = this.sourceIP;
-        console.log("From Dashboard " + this.sourceIP);
+        // console.log("From Dashboard " + this.sourceIP);
         if (ip){
             return (
                 <div>

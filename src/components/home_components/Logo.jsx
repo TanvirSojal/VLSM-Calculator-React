@@ -7,7 +7,7 @@ const Logo = () => {
                 <div className="col-md-4 offset-md-4">
                     <div className=" page-title">
                         <h1 className="logo text-center pt-5">SUBMAX</h1>
-                        <h3 className="app-title text-center">VLSM CALCULATOR</h3>
+                        <h3 className="app-name-home text-center">VLSM CALCULATOR</h3>
                     </div>
                 </div>
             </div>

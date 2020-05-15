@@ -3,6 +3,8 @@ import HostGroupTable from './HostGroupTable'
 import VLSMService from '../../service/VLSMService';
 import IPUtil from '../../algorithm/IPUtil';
 import IPAllocationRequest from '../../model/IPAllocationRequest';
+import Spinner from './Spinner';
+import AllocationError from './AllocationError';
 class HostGroupInput extends Component {
 
     constructor(props){
@@ -38,11 +40,15 @@ class HostGroupInput extends Component {
 
     handleSubmitForm(e){
         e.preventDefault();
-        console.log("submitted");
+        // console.log("submitted");
         const id = this.state.hostGroups.length + 1;
         const name = this.state.groupName;
         const size = Number(this.state.groupSize);
-        this.state.hostGroups.push({id, name, size});
+        
+        this.setState(prevState => ({
+            hostGroups: [...prevState.hostGroups, {id, name, size}]
+        }));
+        // this.state.hostGroups.push({id, name, size});
         this.setState({queryResult: false})
         this.handleClearForm();
     }
@@ -51,16 +57,15 @@ class HostGroupInput extends Component {
     handleAllocationRequest(e){
         if (this.state.hostGroups.length === 0)
             return;
-
+  
         const vlsmService = new VLSMService();
         const sourceIP = IPUtil.getIPObject(sessionStorage.getItem("ip"));
         const ipAllocationRequest = new IPAllocationRequest(sourceIP, this.state.hostGroups);
         const promise = vlsmService.getHostGroupAllocation(ipAllocationRequest);
         promise.then(data => { // this part is asynchronous
-            console.log("Found it!", data);
+            // console.log("Query Result!", data);
             this.setState({queryResult : data});
-            
-        });
+        });   
     }
 
     render(){

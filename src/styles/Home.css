@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 
 html, body{
     height: 100%;
@@ -27,12 +28,11 @@ body{
     color: lightsteelblue;
 }
 
-.app-title{
+.app-name-home{
     margin: auto;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-weight: bold;
-    font-size: x-large;
-    letter-spacing: 0.1em;
+    font-size: xx-large;
     color: azure;
 }
 
@@ -96,6 +96,31 @@ body{
 
 .content-wrap{
     padding-bottom: 2.5rem;
+}
+
+/* counter section */
+.counter-table{
+    width: 100%;
+}
+.counter-table-cell{
+    width: 50%;
+}
+
+.counter{
+    font-family: 'Quicksand', sans-serif;
+    font-size: xxx-large;
+    letter-spacing: 0.03em;
+    float: right;
+    padding-right: 1%;
+    color:lightgrey;
+}
+
+.counter-tagline{
+    font-family: 'Rajdhani', sans-serif;
+    font-size: medium;
+    padding-left: 1%;
+    float: left;
+    color: lightsteelblue;
 }
 
 /* footer section */

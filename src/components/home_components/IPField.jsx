@@ -19,7 +19,7 @@ class IPField extends Component {
     handleInput(e){
         e.preventDefault();
         const {ip} = this.state;
-        console.log("From Home: " + ip);
+        // console.log("From Home: " + ip);
         sessionStorage.setItem("ip", ip);
         return this.setState(
             {
@@ -42,7 +42,7 @@ class IPField extends Component {
         return (
             <div className="container-fluid">
                 <div className="row align-items-center">
-                    <div className="col-md-6 offset-md-3 text-center">
+                    <div className="col-md-6 offset-md-3 pb-5 text-center">
                         <div className="ip-form">
                             <form onSubmit={this.handleInput} action="">
                                 <div className="form-group">

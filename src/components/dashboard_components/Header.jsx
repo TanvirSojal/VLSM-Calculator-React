@@ -19,7 +19,7 @@ class Header extends Component{
         )
     }
     render(){
-        if (!this.state.stay){
+        if (!this.state.stay || !sessionStorage.getItem("ip")){
             return <Redirect to='/' />
         }
 

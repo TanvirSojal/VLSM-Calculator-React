@@ -18,8 +18,10 @@
 
 .app-title{
     font-family: 'Rajdhani', sans-serif;
-    font-weight: 500;
+    font-weight: bold;
     font-size: x-large;
+    letter-spacing: 0.1em;
+    color: azure;
     letter-spacing: normal;
     text-align: center;
 }
@@ -158,6 +160,10 @@
     color: gold;
 }
 
+.waiting-spinner{
+    color: gold;
+}
+
 
 .result-table{
     font-family: 'Rajdhani', sans-serif;
@@ -178,4 +184,12 @@
     font-weight: 600;
     background-color: lavender;
     color: #2F2C40;
+}
+
+.error-text{
+    font-family: 'Jost', sans-serif;
+    color: lavender;
+    font-size: x-large;
+    text-align: center;
+    width: 100%;
 }
