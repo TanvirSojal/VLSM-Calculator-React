@@ -85,7 +85,7 @@ class HostGroupInput extends Component {
                     <form onSubmit={this.handleSubmitForm}>
                         <div className="row pb-4">
                             <div className="col-sm-6 offset-sm-3">
-                                <p className="form-title">+ Add Host Group</p>
+                                <p className="form-title">Add Host Group</p>
                             </div>
                         </div>
                         <div className="row">
