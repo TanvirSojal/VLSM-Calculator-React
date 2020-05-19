@@ -1,6 +1,7 @@
 class Link{
-    constructor(id, type, nodes){
+    constructor(id, name, type, nodes){
         this.id = id;
+        this.name = name;
         this.type = type;
         this.nodes = nodes;
     }
