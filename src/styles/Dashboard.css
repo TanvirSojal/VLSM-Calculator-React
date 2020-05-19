@@ -87,8 +87,7 @@
     border: none;
     border-radius: 4px;
     width: 100%;
-    height: 40px;
-    
+    height: 2.2em;
 }
 
 .add-button{
@@ -109,6 +108,33 @@
 .clear-button:hover{
     background-color: #D51060;
 }
+
+/* gns3 section start */
+.gns3-upload{
+    height: 3em;
+    margin-left: .75em;
+}
+
+.gns3-upload-button{
+    font-size: large;
+    font-weight: bold;
+    color: #2F2C40;
+    background-color: gold;
+    height: 2.6em;
+    width: 10em;
+    border: none;
+    border-radius: 6px;
+}
+.gns3-upload-button:hover{
+    color: #2F2C40;
+    background-color: #f2cf0a;
+}
+
+.gns3-upload-button:active{
+    color: #2F2C40;
+    background-color: goldenrod;
+}
+/* gns3 section end */
 
 .reset-button{
     color: #2F2C40;

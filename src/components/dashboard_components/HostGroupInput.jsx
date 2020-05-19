@@ -3,8 +3,8 @@ import HostGroupTable from './HostGroupTable'
 import VLSMService from '../../service/VLSMService';
 import IPUtil from '../../algorithm/IPUtil';
 import IPAllocationRequest from '../../model/IPAllocationRequest';
-import Spinner from './Spinner';
-import AllocationError from './AllocationError';
+import GNS3Util from '../../algorithm/GNS3Util'
+
 class HostGroupInput extends Component {
 
     constructor(props){
@@ -13,7 +13,8 @@ class HostGroupInput extends Component {
             groupName: "",
             groupSize: "",
             hostGroups: [],
-            queryResult: false
+            queryResult: false,
+            topologyFile: false
         }
         this.handleClearForm = this.handleClearForm.bind(this);
         this.handleGroupNameChange = this.handleGroupNameChange.bind(this);
@@ -21,6 +22,8 @@ class HostGroupInput extends Component {
         this.handleSubmitForm = this.handleSubmitForm.bind(this);
         this.handleResetAll = this.handleResetAll.bind(this);
         this.handleAllocationRequest = this.handleAllocationRequest.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
+        this.handleFileSubmit = this.handleFileSubmit.bind(this);
     }
 
     handleClearForm(e){
@@ -66,6 +69,21 @@ class HostGroupInput extends Component {
             // console.log("Query Result!", data);
             this.setState({queryResult : data});
         });   
+    }
+
+    handleUpload(e){
+        const file = e.target.files[0];
+        this.setState({topologyFile: file});
+    }
+
+    handleFileSubmit(e){
+        const file = this.state.topologyFile;
+        
+        const gns3Util = new GNS3Util();
+        const gns3Hosts = gns3Util.getHostGroups(file);
+        this.setState(prevState => ({
+            hostGroups: [...prevState.hostGroups, ...gns3Hosts]
+        }));
     }
 
     render(){
@@ -127,6 +145,25 @@ class HostGroupInput extends Component {
                             </div>
                         </div>
                     </form>
+                    {/* GNS3 file upload section */}
+                    <div className="row pt-5">
+                        <div className="col-sm-6 offset-sm-3">
+                            <p className="form-title">Upload GNS3 Topology</p>
+                        </div>
+                    </div>
+                    <div className="row pt-3">
+                        <div className="col-sm-2 offset-sm-3">
+                            <input className="gns3-upload"
+                                    type="file"
+                                    id="fileUploader"
+                                    accept=".gns3"
+                                    onChange={this.handleUpload}/>
+                        </div>
+                        <div className="col-sm-2">
+                            <button className="gns3-upload-button"
+                                    onClick={this.handleFileSubmit}>⇡ upload</button>
+                        </div>
+                    </div>
                 </div>
         )
 
