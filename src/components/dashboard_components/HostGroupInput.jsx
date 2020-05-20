@@ -82,6 +82,8 @@ class HostGroupInput extends Component {
         const gns3Util = new GNS3Util();
         const promise = gns3Util.getHostGroups(file); // get hostGroupRequestList
         promise.then(hostGroups => {
+            // console.log("host groups", hostGroups);
+            
             this.setState(prevState => ({
                 hostGroups: [...prevState.hostGroups, ...hostGroups]
             }));
@@ -151,7 +153,7 @@ class HostGroupInput extends Component {
                     {/* GNS3 file upload section */}
                     <div className="row pt-5">
                         <div className="col-sm-6 offset-sm-3">
-                            <p className="form-title">Upload GNS3 Topology</p>
+                            <p className="form-title">Upload GNS3 Topology</p><span class="badge badge-warning">alpha</span>
                         </div>
                     </div>
                     <div className="row pt-3">

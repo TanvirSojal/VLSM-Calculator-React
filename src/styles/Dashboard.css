@@ -56,6 +56,8 @@
 .form-title{
     font-size: x-large;
     padding-left: .5em;
+    float: left;
+    padding-right: .5em;
 }
 
 .input-label{
@@ -110,6 +112,7 @@
 }
 
 /* gns3 section start */
+
 .gns3-upload{
     height: 3em;
     margin-left: .75em;

@@ -101,9 +101,9 @@ class GNS3Util{
 
     // returns node type (pc, switch, router, ...)
     getNodeType(type){
-        if (type.indexOf("vpcs") !== -1) return "pc";
-        if (type.indexOf("switch") !== -1) return "Switch";
-        if (type.indexOf("router") !== -1) return "router";
+        if (type.indexOf("vpcs") !== -1) return "pc"; // example: vpcs
+        if (type.indexOf("switch") !== -1) return "Switch"; // example: ethernet_switch
+        if (type.indexOf("dynamips") !== -1) return "router"; // this needs work
         return "node";
     }
 
@@ -131,9 +131,13 @@ class GNS3Util{
             graph[v].push(u);
         }
 
+        // console.log("Graph", graph);
+        
+
         // bfs function to check component size
+        
         const getComponentSize = (source) => {
-            console.log(visited);
+            console.log(source);
         
             const queue = [source];
             let size = 0;
@@ -143,7 +147,8 @@ class GNS3Util{
                 let u = queue[0];
                 size++;
                 queue.shift();
-
+                console.log("current node:", u);
+                
                 for (let i = 0; i < graph[u].length; i++){
                     let v = graph[u][i];
                     if (visited[v]) continue;
@@ -168,16 +173,25 @@ class GNS3Util{
 
                 const id = ++groupId;
                 const name = link.name;
-                let size = 0;
+                let size = 0;                
 
-                if (link.nodes.node1.type === "router" && link.nodes.node2.type === "router")
+                console.log("u: ", link.nodes.node1.id, " v:", link.nodes.node2.id);
+                
+                if (link.nodes.node1.type === "router" && link.nodes.node2.type === "router"){
+                    visited[link.nodes.node1.id] = 1; // marking routers as visited so they don't get counted as host
+                    visited[link.nodes.node2.id] = 1;
                     size = 1;
+                }
 
-                else if (link.nodes.node1.type === "router")
-                    size = getComponentSize(graph, visited, link.nodes.node2.id);
+                else if (link.nodes.node1.type === "router"){
+                    visited[link.nodes.node1.id] = 1; // marking routers as visited so they don't get counted as host
+                    size = getComponentSize(link.nodes.node2.id);
+                }
 
-                else
-                    size = getComponentSize(graph, visited, link.nodes.node1.id);
+                else{
+                    visited[link.nodes.node2.id] = 1; // marking routers as visited so they don't get counted as host
+                    size = getComponentSize(link.nodes.node1.id);
+                }
     
                 hostGroups.push(new HostGroupRequest(id, name, size));
             }
