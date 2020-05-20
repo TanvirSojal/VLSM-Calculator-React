@@ -80,7 +80,7 @@ class HostGroupInput extends Component {
         const file = this.state.topologyFile;
         
         const gns3Util = new GNS3Util();
-        const promise = gns3Util.getHostGroups(file); // get hostGroupRequestList
+        const promise = gns3Util.getHostGroups(file, Number(this.state.hostGroups.length+1)); // get hostGroupRequestList
         promise.then(hostGroups => {
             // console.log("host groups", hostGroups);
             
