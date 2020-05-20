@@ -5,7 +5,7 @@ import HostGroupRequest from '../model/HostGroupRequest';
 
 class GNS3Util{
     // returns host groups from topology .gns3 file
-    async getHostGroups(file){
+    async getHostGroups(file, id){
         
         let hostGroups = [];
 
@@ -16,7 +16,7 @@ class GNS3Util{
         
         if (json){
             const topology = this.getTopology(json);
-            hostGroups = this.computeHostGroups(topology);
+            hostGroups = this.computeHostGroups(topology, id);
         }
 
         return hostGroups;
@@ -108,7 +108,7 @@ class GNS3Util{
     }
 
     // run dfs/bfs to get component size
-    computeHostGroups(topology){
+    computeHostGroups(topology, id){
         // console.log(topology);
         
         const {nodeList, linkList} = topology;
@@ -137,7 +137,7 @@ class GNS3Util{
         // bfs function to check component size
         
         const getComponentSize = (source) => {
-            console.log(source);
+            // console.log(source);
         
             const queue = [source];
             let size = 0;
@@ -147,7 +147,7 @@ class GNS3Util{
                 let u = queue[0];
                 size++;
                 queue.shift();
-                console.log("current node:", u);
+                // console.log("current node:", u);
                 
                 for (let i = 0; i < graph[u].length; i++){
                     let v = graph[u][i];
@@ -161,7 +161,9 @@ class GNS3Util{
         }
 
         const hostGroups = []; // store host groups derived from the network
-        let groupId = 0; // counter to assign unique id to all host groups
+
+        let groupId = id; // counter to assign unique id to all host groups
+                          // id is provided as a parameter (first available next_id)
 
         for (let i = 0; i < linkList.length; i++){
             const link = linkList[i];
@@ -171,7 +173,7 @@ class GNS3Util{
             // handing link between router to router (size:1 + gateway:1 + broadcast:1)
             if (link.type === "interface"){
 
-                const id = ++groupId;
+                const id = groupId++;
                 const name = link.name;
                 let size = 0;                
 
