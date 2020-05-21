@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/gns3
 
 # production
 /build
