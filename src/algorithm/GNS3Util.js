@@ -177,7 +177,7 @@ class GNS3Util{
                 const name = link.name;
                 let size = 0;                
 
-                console.log("u: ", link.nodes.node1.id, " v:", link.nodes.node2.id);
+                // console.log("u: ", link.nodes.node1.id, " v:", link.nodes.node2.id);
                 
                 if (link.nodes.node1.type === "router" && link.nodes.node2.type === "router"){
                     visited[link.nodes.node1.id] = 1; // marking routers as visited so they don't get counted as host

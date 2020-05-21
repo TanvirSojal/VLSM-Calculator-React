@@ -4,6 +4,7 @@ import VLSMService from '../../service/VLSMService';
 import IPUtil from '../../algorithm/IPUtil';
 import IPAllocationRequest from '../../model/IPAllocationRequest';
 import GNS3Util from '../../algorithm/GNS3Util'
+import FileMaker from '../../service/FileMaker';
 
 class HostGroupInput extends Component {
 
@@ -24,6 +25,7 @@ class HostGroupInput extends Component {
         this.handleAllocationRequest = this.handleAllocationRequest.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
         this.handleFileSubmit = this.handleFileSubmit.bind(this);
+        this.handleDownloadCSV = this.handleDownloadCSV.bind(this);
     }
 
     handleClearForm(e){
@@ -49,10 +51,10 @@ class HostGroupInput extends Component {
         const size = Number(this.state.groupSize);
         
         this.setState(prevState => ({
-            hostGroups: [...prevState.hostGroups, {id, name, size}]
+            hostGroups: [...prevState.hostGroups, {id, name, size}],
+            queryResult: false
         }));
         // this.state.hostGroups.push({id, name, size});
-        this.setState({queryResult: false})
         this.handleClearForm();
     }
 
@@ -85,10 +87,20 @@ class HostGroupInput extends Component {
             // console.log("host groups", hostGroups);
             
             this.setState(prevState => ({
-                hostGroups: [...prevState.hostGroups, ...hostGroups]
+                hostGroups: [...prevState.hostGroups, ...hostGroups],
+                queryResult: false
             }));
         });
         
+    }
+
+    handleDownloadCSV(e){
+        if (this.state.queryResult === false)
+            return;
+
+        const fileMaker = new FileMaker();
+        // method to invoke result file download
+        fileMaker.downloadAsCSV(this.state.queryResult);
     }
 
     render(){
@@ -96,10 +108,24 @@ class HostGroupInput extends Component {
         let allocateButton = false;
         let hostGroupTable = false;
         let result = false;
+        let downloadButton = false;
+   
 
         if (this.state.queryResult){
             result = (
                 <HostGroupTable rows={this.state.queryResult}/>
+            )
+
+            downloadButton = (
+                <div className="container-fluid">
+                    <div className="row pt-3 pb-4">
+                        <div className="col-sm-2 offset-sm-5">
+                            <button className="download-button"
+                                    onClick={this.handleDownloadCSV}
+                            >Download .CSV</button>
+                        </div>
+                    </div>
+                </div>
             )
         }
 
@@ -153,7 +179,7 @@ class HostGroupInput extends Component {
                     {/* GNS3 file upload section */}
                     <div className="row pt-5">
                         <div className="col-sm-6 offset-sm-3">
-                            <p className="form-title">Upload GNS3 Topology</p><span class="badge badge-warning">alpha</span>
+                            <p className="form-title">Upload GNS3 Topology</p><span className="badge badge-warning">alpha</span>
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -221,6 +247,9 @@ class HostGroupInput extends Component {
                 </div>
                 <div>
                     {result}
+                </div>
+                <div>
+                    {downloadButton}
                 </div>
             </div>
         )

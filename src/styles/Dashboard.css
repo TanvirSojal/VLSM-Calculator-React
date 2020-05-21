@@ -216,6 +216,23 @@
     color: #2F2C40;
 }
 
+.download-button{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: larger;
+    background-color: lavender;
+    width: 100%;
+    border: none;
+    height: 2.2em;
+}
+
+.download-button:hover{
+    background-color: lavenderblush;
+}
+
+.download-button:active{
+    background-color: lightsteelblue;
+}
+
 .error-text{
     font-family: 'Jost', sans-serif;
     color: lavender;
