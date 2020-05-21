@@ -50,7 +50,7 @@ class IPField extends Component {
                                     pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/(3[0-2]|2[0-9]|1[0-9]|[0-9]))$"
                                     value={this.state.ip}
                                     onChange={this.handleInputChange}
-                                    required="required" name="sourceIP" placeholder="e.g: 180.14.23.12/16"/>
+                                    required="required" name="sourceIP" placeholder="e.g: 180.14.23.128/25"/>
                                 </div>
                                 <button className="ip-button">GO</button>
                             </form>
