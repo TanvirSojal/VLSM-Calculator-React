@@ -220,6 +220,7 @@
     font-family: 'Roboto Condensed', sans-serif;
     font-size: larger;
     background-color: lavender;
+    border-radius: 4px;
     width: 100%;
     border: none;
     height: 2.2em;
