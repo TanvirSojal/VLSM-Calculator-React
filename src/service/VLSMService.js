@@ -1,9 +1,10 @@
 import axios from 'axios';
+require('dotenv').config();
 
 class VLSMService{
     constructor() {
-        this.allocationURL = "https://vlsm-calculator.herokuapp.com/api/v1/vlsm-calculator/allocation";
-        this.useCountURL = "https://submax-analytics.herokuapp.com/api/v1/analytics/vlsm/";
+        this.allocationURL = process.env.REACT_APP_VLSM_API;
+        this.useCountURL = process.env.REACT_APP_STAT_API;
     }
     async getHostGroupAllocation(request){
         // console.log("Query: ", request);

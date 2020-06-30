@@ -11,6 +11,7 @@ import './App.css';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NotFoundPage from './pages/404';
+
 class App extends Component {
   render(){
     return (
