@@ -1,12 +1,12 @@
 import axios from 'axios';
 require('dotenv').config();
 
-class VLSMService{
+class VLSMService {
     constructor() {
         this.allocationURL = process.env.REACT_APP_VLSM_API;
         this.useCountURL = process.env.REACT_APP_STAT_API;
     }
-    async getHostGroupAllocation(request){
+    async getHostGroupAllocation(request) {
         // console.log("Query: ", request);
         // const response = await fetch(this.allocationURL, request);
         // const data = await response.json();
@@ -17,19 +17,19 @@ class VLSMService{
                 return response.data;
             })
             .catch(error => {
-                // console.log("Error Occured in API!");
+                // console.log("Error Occurred in API!");
                 return false;
             })
     }
 
-    async getUseCount(){
+    async getUseCount() {
         return axios.get(this.useCountURL)
             .then(response => {
                 // console.log("Response: ", response);
                 return response.data;
             })
             .catch(error => {
-                // console.log("Error Occured in API!");
+                // console.log("Error Occurred in API!");
                 return false;
             })
     }

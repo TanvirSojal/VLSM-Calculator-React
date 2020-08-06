@@ -8,7 +8,7 @@ import FileMaker from '../../service/FileMaker';
 
 class HostGroupInput extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             groupName: "",
@@ -28,73 +28,72 @@ class HostGroupInput extends Component {
         this.handleDownloadCSV = this.handleDownloadCSV.bind(this);
     }
 
-    handleClearForm(e){
+    handleClearForm(e) {
         this.setState({ groupName: "", groupSize: "" })
     }
 
-    handleGroupNameChange(e){
+    handleGroupNameChange(e) {
         this.setState({ groupName: e.target.value })
     }
-    handleGroupSizeChange(e){
+    handleGroupSizeChange(e) {
         this.setState({ groupSize: e.target.value })
     }
 
-    handleResetAll(e){
-        this.setState({hostGroups: [], queryResult: false});
+    handleResetAll(e) {
+        this.setState({ hostGroups: [], queryResult: false });
     }
 
-    handleSubmitForm(e){
+    handleSubmitForm(e) {
         e.preventDefault();
         // console.log("submitted");
         const id = this.state.hostGroups.length + 1;
         const name = this.state.groupName;
         const size = Number(this.state.groupSize);
-        
+
         this.setState(prevState => ({
-            hostGroups: [...prevState.hostGroups, {id, name, size}],
+            hostGroups: [...prevState.hostGroups, { id, name, size }],
             queryResult: false
         }));
         // this.state.hostGroups.push({id, name, size});
         this.handleClearForm();
     }
 
-
-    handleAllocationRequest(e){
+    handleAllocationRequest(e) {
         if (this.state.hostGroups.length === 0)
             return;
-  
+
         const vlsmService = new VLSMService();
         const sourceIP = IPUtil.getIPObject(sessionStorage.getItem("ip"));
         const ipAllocationRequest = new IPAllocationRequest(sourceIP, this.state.hostGroups);
         const promise = vlsmService.getHostGroupAllocation(ipAllocationRequest);
         promise.then(data => { // this part is asynchronous
             // console.log("Query Result!", data);
-            this.setState({queryResult : data});
-        });   
+            this.setState({ queryResult: data });
+        });
     }
 
-    handleUpload(e){
+    handleUpload(e) {
         const file = e.target.files[0];
-        this.setState({topologyFile: file});
+        this.setState({ topologyFile: file });
     }
 
-    handleFileSubmit(e){
+    handleFileSubmit(e) {
         const file = this.state.topologyFile;
-        
+
         const gns3Util = new GNS3Util();
-        const promise = gns3Util.getHostGroups(file, Number(this.state.hostGroups.length+1)); // get hostGroupRequestList
+        const promise = gns3Util.getHostGroups(file, Number(this.state.hostGroups.length + 1)); // get hostGroupRequestList
         promise.then(hostGroups => {
             // console.log("host groups", hostGroups);
-            
+
             this.setState(prevState => ({
                 hostGroups: [...prevState.hostGroups, ...hostGroups],
                 queryResult: false
             }));
         });
-        
+
     }
 
-    handleDownloadCSV(e){
+    handleDownloadCSV(e) {
         if (this.state.queryResult === false)
             return;
 
@@ -103,17 +102,17 @@ class HostGroupInput extends Component {
         fileMaker.downloadAsCSV(this.state.queryResult);
     }
 
-    render(){
+    render() {
         const rows = this.state.hostGroups;
         let allocateButton = false;
         let hostGroupTable = false;
         let result = false;
         let downloadButton = false;
-   
 
-        if (this.state.queryResult){
+
+        if (this.state.queryResult) {
             result = (
-                <HostGroupTable rows={this.state.queryResult}/>
+                <HostGroupTable rows={this.state.queryResult} />
             )
 
             downloadButton = (
@@ -121,7 +120,7 @@ class HostGroupInput extends Component {
                     <div className="row pt-3 pb-4">
                         <div className="col-sm-2 offset-sm-5">
                             <button className="download-button"
-                                    onClick={this.handleDownloadCSV}
+                                onClick={this.handleDownloadCSV}
                             >Download .CSV</button>
                         </div>
                     </div>
@@ -131,71 +130,71 @@ class HostGroupInput extends Component {
 
         const inputField = (
             <div className="container-fluid host-form pt-5 pb-5">
-                    <form onSubmit={this.handleSubmitForm}>
-                        <div className="row pb-4">
-                            <div className="col-sm-6 offset-sm-3">
-                                <p className="form-title">Add Host Group</p>
-                            </div>
+                <form onSubmit={this.handleSubmitForm}>
+                    <div className="row pb-4">
+                        <div className="col-sm-6 offset-sm-3">
+                            <p className="form-title">Add Host Group</p>
                         </div>
-                        <div className="row">
-                            <div className="col-sm-1 offset-sm-3">
-                                <label className="input-label" htmlFor="groupName">Group Name</label>
-                            </div>
-                            <div className="col-sm-5">
-                                <input className="input-field" id="groupName" 
-                                type="text" placeholder="Office Network" 
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-1 offset-sm-3">
+                            <label className="input-label" htmlFor="groupName">Group Name</label>
+                        </div>
+                        <div className="col-sm-5">
+                            <input className="input-field" id="groupName"
+                                type="text" placeholder="Office Network"
                                 onChange={this.handleGroupNameChange}
                                 value={this.state.groupName}
                                 required
-                                />
-                            </div>
+                            />
                         </div>
-                        <div className="row pt-2">
-                            <div className="col-sm-1 offset-sm-3">
-                                <label className="input-label" htmlFor="groupSize">Number of Devices</label>
-                            </div>
-                            <div className="col-sm-5">
-                                <input type="number" className="input-field"
-                                id ="groupSize" placeholder="12"
+                    </div>
+                    <div className="row pt-2">
+                        <div className="col-sm-1 offset-sm-3">
+                            <label className="input-label" htmlFor="groupSize">Number of Devices</label>
+                        </div>
+                        <div className="col-sm-5">
+                            <input type="number" className="input-field"
+                                id="groupSize" placeholder="12"
                                 onChange={this.handleGroupSizeChange}
                                 value={this.state.groupSize}
                                 required
-                                />
-                            </div>
+                            />
                         </div>
-                        <div className="row pt-2 pt-4">
-                            <div className="col-sm-1 offset-sm-4">
-                                <button className="form-button add-button">+ add</button>
-                            </div>
-                            <div className="col-sm-1">
+                    </div>
+                    <div className="row pt-2 pt-4">
+                        <div className="col-sm-1 offset-sm-4">
+                            <button className="form-button add-button">+ add</button>
+                        </div>
+                        <div className="col-sm-1">
                             {/* cross sign: ✘, ✖ */}
                             <button type="button" className=" form-button clear-button" onClick={this.handleClearForm}>✖ clear</button>
-                            </div>
-                            <div className="col-sm-3">
-                                <button type="button" className=" form-button reset-button" onClick={this.handleResetAll}>⟳ reset all</button>
-                            </div>
                         </div>
-                    </form>
-                    {/* GNS3 file upload section */}
-                    <div className="row pt-5">
-                        <div className="col-sm-6 offset-sm-3">
-                            <p className="form-title">Upload GNS3 Topology</p><span className="badge badge-warning">alpha</span>
+                        <div className="col-sm-3">
+                            <button type="button" className=" form-button reset-button" onClick={this.handleResetAll}>⟳ reset all</button>
                         </div>
                     </div>
-                    <div className="row pt-3">
-                        <div className="col-sm-2 offset-sm-3">
-                            <input className="gns3-upload"
-                                    type="file"
-                                    id="fileUploader"
-                                    accept=".gns3"
-                                    onChange={this.handleUpload}/>
-                        </div>
-                        <div className="col-sm-2">
-                            <button className="gns3-upload-button"
-                                    onClick={this.handleFileSubmit}>⇡ upload</button>
-                        </div>
+                </form>
+                {/* GNS3 file upload section */}
+                <div className="row pt-5">
+                    <div className="col-sm-6 offset-sm-3">
+                        <p className="form-title">Upload GNS3 Topology</p><span className="badge badge-warning">alpha</span>
                     </div>
                 </div>
+                <div className="row pt-3">
+                    <div className="col-sm-2 offset-sm-3">
+                        <input className="gns3-upload"
+                            type="file"
+                            id="fileUploader"
+                            accept=".gns3"
+                            onChange={this.handleUpload} />
+                    </div>
+                    <div className="col-sm-2">
+                        <button className="gns3-upload-button"
+                            onClick={this.handleFileSubmit}>⇡ upload</button>
+                    </div>
+                </div>
+            </div>
         )
 
         if (rows.length) {
@@ -213,26 +212,26 @@ class HostGroupInput extends Component {
                         <table className="table table-dark host-table">
                             <thead>
                                 <tr className="host-table-head">
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Size</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Size</th>
                                 </tr>
                             </thead>
                             <tbody className="host-table-body">
                                 {rows.map(row => {
                                     return <tr key={row.id}>
-                                            <th scope="row">{row.id}</th>
-                                            <td>{row.name}</td>
-                                            <td>{row.size}</td>
-                                        </tr>
+                                        <th scope="row">{row.id}</th>
+                                        <td>{row.name}</td>
+                                        <td>{row.size}</td>
+                                    </tr>
                                 })}
                             </tbody>
                         </table>
                     </div>
-            </div>
+                </div>
             )
         }
-        
+
         return (
             <div>
                 <div>
